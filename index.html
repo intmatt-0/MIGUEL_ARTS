@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miguel Arts Gallery — Graphite & Pixel Portfolio</title>
+    
+    <!-- 8-Bit Retro Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- SECTION 1: INTERACTIVE PIXEL HERO -->
+    <section id="hero-section">
+        <div class="pixel-frame">
+            <canvas id="gameCanvas"></canvas>
+            <div class="pixel-hint">[ WASD / ARROWS TO EXPLORE ]</div>
+
+            <!-- ARTWORK INSPECT MODAL -->
+            <div id="art-modal" class="pixel-modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-art-placeholder">[ ARTWORK PREVIEW ]</div>
+                    <div class="modal-details">
+                        <h3>TITLE: [ PLACEHOLDER TITLE ]</h3>
+                        <p><strong>MEDIUM:</strong> [ Placeholder Medium ]</p>
+                        <p><strong>SIZE:</strong> [ Placeholder Dimensions ]</p>
+                        <p><strong>DESC:</strong> [ Placeholder Description goes here... ]</p>
+                        <span class="modal-close-hint">[ PRESS ESC TO CLOSE ]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+ <!-- SECTION 2: GRAPHITE ARTWORKS GALLERY (RANDOMIZED CAROUSEL) -->
+    <section id="gallery-section">
+        <h2 class="pixel-title">=== GRAPHITE GALLERY ===</h2>
+        <p class="section-sub">HAND-DRAWN PENCIL & GRAPHITE WORKS</p>
+
+        <div class="carousel-wrapper">
+            <div class="carousel-track" id="carouselTrack">
+                <!-- Cards injected dynamically via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: CONTACT & COMMISSIONS -->
+    <section id="contact-section">
+        <h2 class="pixel-title">=== CONTACT ARTIST ===</h2>
+        <p class="contact-status">[ STATUS: COMMISSIONS OPEN ]</p>
+        
+        <div class="contact-box">
+            <p>NEED A CUSTOM GRAPHITE PORTRAIT OR CONCEPT SKETCH?</p>
+            <div class="btn-group">
+                <a href="https://www.facebook.com/miguelatasarts" class="pixel-btn">FACEBOOK</a>
+                <a href="https://www.instagram.com/miguelatas.arts/" class="pixel-btn">INSTAGRAM</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="main.js"></script>
+</body>
+</html>

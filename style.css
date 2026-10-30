@@ -1,0 +1,269 @@
+/* --- RESET & 8-BIT THEME VARIABLES --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: #0f0f0f;
+    --bg-card: #1c1c1c;
+    --pencil-white: #f0f0f0;
+    --pencil-gray: #8a8a8a;
+    --pencil-dark-gray: #333333;
+    --font-pixel: 'Press Start 2P', monospace;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--pencil-white);
+    font-family: var(--font-pixel);
+    line-height: 1.8;
+    overflow-x: hidden;
+    image-rendering: pixelated;
+}
+
+/* --- SECTION 1: HERO CANVAS --- */
+#hero-section {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffffe7;
+    padding: 20px;
+    border-bottom: 6px solid var(--pencil-white);
+}
+
+/* Hard-edged pixelated container frame */
+.pixel-frame {
+    position: relative;
+    border: 4px solid var(--pencil-white);
+    box-shadow: 6px 6px 0px var(--pencil-dark-gray);
+    background-color: #000;
+}
+
+canvas {
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    max-width: 100%;
+    height: auto;
+}
+
+.pixel-hint {
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--pencil-white);
+    color: var(--bg-dark);
+    padding: 6px 12px;
+    font-size: 10px;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 3px 3px 0px var(--pencil-dark-gray);
+    white-space: nowrap;
+}
+
+/* --- SECTION 2: GALLERY INFINITE CAROUSEL --- */
+#gallery-section {
+    padding: 80px 0;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+}
+
+.carousel-wrapper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 20px 0;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 90px; /* Much wider gap between cards */
+    width: max-content;
+    animation: smoothScroll 35s linear infinite;
+    align-items: center;
+    padding-top: 30px; /* Gives room for vertical offsets */
+    padding-bottom: 30px;
+}
+
+
+
+/* Pause scroll movement on hover so clicking/inspecting is clean */
+.carousel-wrapper:hover .carousel-track {
+    animation-play-state: paused;
+}
+
+.pixel-card {
+    flex: 0 0 280px;
+    background: var(--bg-card);
+    border: 4px solid var(--pencil-white);
+    padding: 16px;
+    box-shadow: 6px 6px 0px var(--pencil-dark-gray);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+    position: relative; /* Allows individual Y positioning via JS */
+}
+
+.pixel-card:hover {
+    transform: translate(-4px, -6px);
+    box-shadow: 10px 10px 0px var(--pencil-white);
+}
+
+.art-frame {
+    width: 100%;
+    height: 200px;
+    background: var(--pencil-dark-gray);
+    border: 2px dashed var(--pencil-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.art-label {
+    font-size: 0.6rem;
+    color: var(--pencil-gray);
+}
+
+.pixel-card h3 {
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+}
+
+.art-meta {
+    font-size: 0.55rem;
+    color: var(--pencil-gray);
+}
+
+/* Seamless Gapless Loop Keyframes */
+@keyframes smoothScroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* --- SECTION 3: CONTACT --- */
+#contact-section {
+    padding: 80px 20px;
+    background-color: #080808;
+    text-align: center;
+    border-top: 6px solid var(--pencil-white);
+}
+
+.contact-status {
+    font-size: 0.65rem;
+    color: var(--pencil-gray);
+    margin-bottom: 30px;
+}
+
+.contact-box {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--bg-card);
+    border: 4px solid var(--pencil-white);
+    padding: 30px 20px;
+    box-shadow: 6px 6px 0px var(--pencil-dark-gray);
+}
+
+.contact-box p {
+    font-size: 0.65rem;
+    margin-bottom: 24px;
+    line-height: 2;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.pixel-btn {
+    display: inline-block;
+    padding: 12px 18px;
+    background: var(--pencil-white);
+    color: var(--bg-dark);
+    text-decoration: none;
+    font-size: 0.7rem;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 4px 4px 0px var(--pencil-dark-gray);
+    cursor: pointer;
+}
+
+.pixel-btn:hover {
+    background: var(--pencil-gray);
+    box-shadow: 4px 4px 0px var(--pencil-white);
+}
+
+.pixel-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--pencil-dark-gray);
+}
+
+/* --- ARTWORK INSPECT MODAL --- */
+.pixel-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background: var(--bg-card);
+    border: 4px solid var(--pencil-white);
+    box-shadow: 6px 6px 0px var(--pencil-dark-gray);
+    padding: 24px;
+    display: flex;
+    gap: 24px;
+    max-width: 520px;
+    width: 90%;
+    color: var(--pencil-white);
+    font-family: var(--font-pixel);
+}
+
+.modal-art-placeholder {
+    width: 160px;
+    height: 160px;
+    background: var(--pencil-dark-gray);
+    border: 2px dashed var(--pencil-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.5rem;
+    color: var(--pencil-gray);
+    text-align: center;
+    padding: 10px;
+}
+
+.modal-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 0.55rem;
+    line-height: 2;
+}
+
+.modal-details h3 {
+    font-size: 0.65rem;
+    margin-bottom: 4px;
+    color: var(--pencil-white);
+}
+
+.modal-close-hint {
+    font-size: 0.45rem;
+    color: var(--pencil-gray);
+    margin-top: 10px;
+}
