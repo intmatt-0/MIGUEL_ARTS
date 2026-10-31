@@ -14,8 +14,56 @@
 </head>
 <body>
 
+    <!-- RETRO GAME INTRO OVERLAY -->
+<div id="gameIntroOverlay" class="intro-overlay">
+    <!-- Spotlight Switch Sound Effect -->
+    <audio id="spotlightSound" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
+
+    <!-- LAYER 1: Full Black Cover + Title Screen Text (No Box Frame) -->
+    <div id="introBlackCover" class="intro-black-cover">
+        <div id="introTitleScreen" class="intro-title-screen">
+            <h1 class="intro-heading">WELCOME TO MIGUEL'S ART GALLERY</h1>
+            <p class="intro-prompt">[ PRESS SPACE TO ENTER ]</p>
+        </div>
+    </div>
+
+    <!-- LAYER 2: Spotlight Vignette Layer -->
+    <div id="introSpotlightMask" class="intro-spotlight-mask"></div>
+</div>
+
+    <!-- LAYER 2: Spotlight Cutout Mask Layer -->
+    <div id="introSpotlightMask" class="intro-spotlight-mask"></div>
+</div>
+    <!-- RETRO 8-BIT NAVBAR -->
+    <nav id="pixel-navbar">
+        <div class="nav-container">
+            <!-- BRAND CONTAINER (Logo Box + Name aligned side-by-side) -->
+            <a href="#" class="nav-brand">
+                <div class="nav-logo-box">
+                    <img src="ASSETS/logo.jpg" alt="Logo" class="nav-logo-img">
+                </div>
+                <span>MIGUEL.ARTS</span>
+            </a>
+
+            <!-- NAV LINKS (Right aligned) -->
+            <div class="nav-links">
+                <a href="#hero-section" class="nav-link">[ EXPLORE ]</a>
+                <a href="#" id="openAlbumBtn" class="nav-link">[ GALLERY ]</a>
+                <a href="#about-section" class="nav-link">[ ABOUT ]</a>
+                <a href="#contact-section" class="nav-link">[ CONTACT ]</a>
+            </div>
+        </div>
+    </nav>
+
     <!-- SECTION 1: INTERACTIVE PIXEL HERO -->
     <section id="hero-section">
+        <div class="hero-container">
+            <!-- RETRO WELCOME HEADER -->
+            <div class="welcome-box">
+                <h1 class="welcome-title">WELCOME TO THE GALLERY</h1>
+                <p class="welcome-subtitle">[ COME IN AND LOOK AROUND! ]</p>
+            </div>
+
         <div class="pixel-frame">
             <canvas id="gameCanvas"></canvas>
             <div class="pixel-hint">[ WASD / ARROWS TO EXPLORE ]</div>
@@ -47,21 +95,175 @@
             </div>
         </div>
     </section>
+    
+    <hr class="pixel-divider">
 
-    <!-- SECTION 3: CONTACT & COMMISSIONS -->
+    <!-- SECTION 3: ABOUT ARTIST -->
+    <section id="about-section">
+        <h2 class="pixel-title">=== NICE TO MEET YOU! ===</h2>
+
+        <div class="about-card">
+            <!-- SQUARE RETRO PROFILE PICTURE FRAME -->
+            <div class="profile-frame">
+                <!-- Replace 'ASSETS/profile-placeholder.png' with your actual image path later -->
+                <img src="ASSETS/PFP.png" alt="Artist Profile" class="profile-img">
+
+                <img src="ASSETS/PFP2.png" alt="Real Face" class="profile-img real-face">
+
+                <span class="profile-placeholder-text"></span>
+            </div>
+
+            <!-- ARTIST INFO & BIO PLACEHOLDERS -->
+            <div class="about-info">
+                <div class="about-header-row">
+                    <div>
+                        <h3 class="artist-name">FULL NAME PLACEHOLDER</h3>
+                        <p class="artist-role">TRADITIONAL ARTIST / GRAPHITE SPECIALIST</p>
+                    </div>
+                </div>
+
+                <p class="artist-bio">
+                    YOUR SELF-DESCRIPTION PLACEHOLDER HERE. Write a short introduction about your 
+                    background, passion for graphite and pencil sketches, art philosophy, or current projects.
+                </p>
+
+                <!-- PERSONAL SOCIAL LINKS -->
+                <div class="about-socials">
+                    <span class="social-label">CONNECT:</span>
+                    <a href="https://www.facebook.com/atas.miguel" target="_blank" class="pixel-btn-sm">FACEBOOK</a>
+                    <a href="https://www.instagram.com/miguel.atas/" target="_blank" class="pixel-btn-sm">INSTAGRAM</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: CONTACT & COMMISSIONS -->
     <section id="contact-section">
-        <h2 class="pixel-title">=== CONTACT ARTIST ===</h2>
+        <h2 class="pixel-title">=== LET'S CONNECT! ===</h2>
         <p class="contact-status">[ STATUS: COMMISSIONS OPEN ]</p>
         
         <div class="contact-box">
             <p>NEED A CUSTOM GRAPHITE PORTRAIT OR CONCEPT SKETCH?</p>
             <div class="btn-group">
-                <a href="https://www.facebook.com/miguelatasarts" class="pixel-btn">FACEBOOK</a>
-                <a href="https://www.instagram.com/miguelatas.arts/" class="pixel-btn">INSTAGRAM</a>
+                <a href="https://www.facebook.com/miguelatasarts" target="_blank" class="pixel-btn">FACEBOOK</a>
+                <a href="https://www.instagram.com/miguelatas.arts/" target="_blank" class="pixel-btn">INSTAGRAM</a>
             </div>
         </div>
     </section>
 
+    <!-- OMORI-STYLE PHOTO ALBUM POPUP WINDOW -->
+    <div id="albumModal" class="pixel-modal" style="display: none;">
+        <div class="album-modal-container">
+            <div class="album-modal-header">
+                <h3>=== GRAPHITE PHOTO ALBUM ===</h3>
+                <button id="closeAlbumBtn" class="modal-close">&times;</button>
+            </div>
+            <p class="album-subtitle">[ CLICK ANY POLAROID TO INSPECT DETAILS ]</p>
+
+            <!-- PHOTO ALBUM GRID -->
+            <div class="album-grid">
+                <!-- ARTWORK 1 -->
+                <div class="album-polaroid" data-title="PORTRAIT OF SILENCE" data-medium="Graphite & Charcoal" data-dim="9 x 12 in" data-year="2026" data-desc="A high-contrast graphite study focusing on soft shadows and deep charcoal shading.">
+                    <div class="polaroid-photo">
+                        <img src="ASSETS/atas.png" alt="Portrait of Silence">
+                    </div>
+                </div>
+
+                <!-- ARTWORK 2 -->
+                <div class="album-polaroid" data-title="FROZEN MOMENT" data-medium="Fine Liner & Pencil" data-dim="8 x 10 in" data-year="2026" data-desc="Detailed graphite sketch capturing quick organic light reflections.">
+                    <div class="polaroid-photo">
+                        <img src="ASSETS/atas.png" alt="Frozen Moment">
+                    </div>
+                </div>
+
+                <!-- ARTWORK 3 -->
+                <div class="album-polaroid" data-title="VALLEY OF SHADOWS" data-medium="Mechanical Pencil 0.5mm" data-dim="11 x 14 in" data-year="2026" data-desc="Intricate mechanical pencil composition exploring architectural lines and shadows.">
+                    <div class="polaroid-photo">
+                        <img src="ASSETS/atas.png" alt="Valley of Shadows">
+                    </div>
+                </div>
+
+                <!-- ARTWORK 4 -->
+                <div class="album-polaroid" data-title="SHADOW & LIGHT" data-medium="Charcoal & B Graphite" data-dim="9 x 12 in" data-year="2026" data-desc="Atmospheric pencil study focusing on volumetric lighting contrast.">
+                    <div class="polaroid-photo">
+                        <img src="ASSETS/atas.png" alt="Shadow & Light">
+                    </div>
+                </div>
+
+                <!-- PLACEHOLDER 1: COMING SOON -->
+                <div class="album-polaroid placeholder-card">
+                    <div class="polaroid-photo placeholder-box">
+                        <span>COMING<br>SOON</span>
+                    </div>
+                </div>
+
+                <!-- PLACEHOLDER 2: COMING SOON -->
+                <div class="album-polaroid placeholder-card">
+                    <div class="polaroid-photo placeholder-box">
+                        <span>COMING<br>SOON</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="main.js"></script>
+
+    <!-- RETRO PIXELATION HOVER FILTER -->
+<svg style="display: none;">
+    <defs>
+        <filter id="pixelate">
+            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feComponentTransfer>
+                <feFuncA type="discrete" tableValues="0 1" />
+            </feComponentTransfer>
+        </filter>
+    </defs>
+</svg>
+
+<!-- RETRO GAME HOVER TOOLTIP WINDOW -->
+<div id="artTooltip" class="pixel-tooltip">
+    <div class="tooltip-header">
+        <span id="tooltipTitle">ART TITLE PLACEHOLDER</span>
+    </div>
+    <div class="tooltip-body">
+        <p><strong>MEDIUM:</strong> <span id="tooltipMedium">GRAPHITE ON PAPER</span></p>
+        <p><strong>DIMENSIONS:</strong> <span id="tooltipDim">9 x 12 IN</span></p>
+        <p><strong>YEAR:</strong> <span id="tooltipYear">2026</span></p>
+        <p class="tooltip-desc" id="tooltipDesc">Hover placeholder description for artwork details.</p>
+    </div>
+</div>
+
+<!-- FULLSCREEN ARTWORK INSPECT MODAL -->
+    <div id="artInspectModal" class="pixel-modal" style="display: none; z-index: 10005;">
+        <div class="inspect-modal-card">
+            <button id="inspectCloseBtn" class="modal-close">&times;</button>
+            <div class="inspect-body">
+                <div class="inspect-img-container">
+                    <img id="inspectImg" src="" alt="Full Artwork">
+                </div>
+                <div class="inspect-info">
+                    <h3 id="inspectTitle">ARTWORK TITLE</h3>
+                    <p><strong>MEDIUM:</strong> <span id="inspectMedium">-</span></p>
+                    <p><strong>DIMENSIONS:</strong> <span id="inspectDim">-</span></p>
+                    <p><strong>YEAR:</strong> <span id="inspectYear">-</span></p>
+                    <p id="inspectDesc" class="inspect-desc">Description goes here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOR AUDIO -->
+<!-- 1. Background Ambient Music / Lo-Fi Track -->
+<audio id="bgmAudio" src="ASSETS/bgm-ambient.mp3" loop preload="auto"></audio>
+
+<!-- 2. Walking / Footstep Sound Effect -->
+<audio id="stepSound" src="ASSETS/footstep.mp3" preload="auto"></audio>
+
+<!-- 3. Hover Sound Effect -->
+<audio id="hoverSound" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" preload="auto"></audio>
+
+<!-- 4. Click Sound Effect -->
+<audio id="clickSound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" preload="auto"></audio>
 </body>
 </html>

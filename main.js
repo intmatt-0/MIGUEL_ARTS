@@ -7,12 +7,12 @@ canvas.width = 960;
 canvas.height = 540;
 
 const ASSETS = {
-    mapImage: "ASSETS/MAP.png",
+    mapImage: "ASSETS/MAP-V2.png",
     characterImage: "ASSETS/atas.png",
     canvasStand: "ASSETS/828a7dda-81c8-472e-8fb1-9f8fab7cfcb5-removebg-preview.png"
 };
 
-// 1. Load All Individual Walk Frames
+
 const downFrames = [new Image(), new Image(), new Image(), new Image()];
 downFrames[0].src = "ASSETS/Dwalk1.png";
 downFrames[1].src = "ASSETS/Dwalk2.png";
@@ -88,7 +88,7 @@ window.addEventListener("keyup", (e) => {
     if (e.key === "d" || e.key === "D" || e.key === "ArrowRight") keys.d = false;
 });
 
-let charX = 450;
+let charX = 440;
 let charY = 150;
 let charSpeed = 2.5;
 let currentDirection = "down"; 
@@ -139,6 +139,33 @@ function checkCollision(x, y) {
 }
 
 function gameLoop() {
+
+
+    // Inside your gameLoop() function in main.js:
+let stepTimer = 0;
+
+if (isMoving) {
+    frameTimer++;
+    if (frameTimer >= frameSpeed) {
+        frameTimer = 0;
+        animFrame = (animFrame + 1) % 4;
+    }
+
+    // Play footstep audio periodically while moving
+    stepTimer++;
+    if (stepTimer % 18 === 0) { // Triggers sound every 18 frames
+        const stepAudio = document.getElementById('stepSound');
+        if (stepAudio) {
+            stepAudio.currentTime = 0;
+            stepAudio.play().catch(() => {});
+        }
+    }
+} else {
+    animFrame = 0;
+    frameTimer = 0;
+    stepTimer = 0;
+}
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.drawImage(bgMap, 0, 0, canvas.width, canvas.height);
@@ -241,9 +268,7 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
-//looppppppartwork
 
-// --- 5 ARTWORK PLACEHOLDERS (EDIT THESE EASILY LATER) ---
 const galleryArtworks = [
     { label: "PORTRAIT #1", title: "PENCIL STUDY I", meta: "GRAPHITE ON PAPER • 2026" },
     { label: "SKETCH #2", title: "SHADOW & LIGHT", meta: "CHARCOAL & B GRAPHITE • 2026" },
@@ -267,12 +292,12 @@ function buildCarousel() {
 
     const randomizedSet = shuffleArray(galleryArtworks);
 
-    // Function to generate card HTML with random Y-offsets and slight tilts
+
     const createCardsHTML = (set) => {
         return set.map(art => {
-            // Random Y offset between -25px and +25px
+       
             let randomY = Math.floor(Math.random() * 51) - 25;
-            // Random subtle rotation between -3deg and +3deg for organic look
+     
             let randomRot = (Math.random() * 6 - 3).toFixed(1);
 
             return `
@@ -285,10 +310,200 @@ function buildCarousel() {
         }).join('');
     };
 
-    // Duplicate the randomized set back-to-back for seamless loop
     track.innerHTML = createCardsHTML(randomizedSet) + createCardsHTML(randomizedSet);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
     buildCarousel();
+});
+
+// RETRO HOVER TOOLTIP LOGIC
+document.addEventListener('DOMContentLoaded', () => {
+    const tooltip = document.getElementById('artTooltip');
+    const tooltipTitle = document.getElementById('tooltipTitle');
+    const tooltipMedium = document.getElementById('tooltipMedium');
+    const tooltipDim = document.getElementById('tooltipDim');
+    const tooltipYear = document.getElementById('tooltipYear');
+    const tooltipDesc = document.getElementById('tooltipDesc');
+
+    const polaroids = document.querySelectorAll('.album-polaroid:not(.placeholder-card)');
+
+    polaroids.forEach(card => {
+        card.addEventListener('mouseenter', (e) => {
+            const title = card.getAttribute('data-title') || 'TITLE PLACEHOLDER';
+            const medium = card.getAttribute('data-medium') || 'MEDIUM PLACEHOLDER';
+            const dim = card.getAttribute('data-dim') || 'DIMENSIONS PLACEHOLDER';
+            const year = card.getAttribute('data-year') || '2026';
+            const desc = card.getAttribute('data-desc') || 'DESCRIPTION PLACEHOLDER';
+
+            tooltipTitle.textContent = title;
+            tooltipMedium.textContent = medium;
+            tooltipDim.textContent = dim;
+            tooltipYear.textContent = year;
+            tooltipDesc.textContent = desc;
+
+            tooltip.classList.add('active');
+        });
+
+        card.addEventListener('mousemove', (e) => {
+            // Offsets window slightly away from cursor tip
+            let x = e.clientX + 16;
+            let y = e.clientY + 16;
+
+            // Keeps window inside viewport edges
+            if (x + 250 > window.innerWidth) x = e.clientX - 250;
+            if (y + 180 > window.innerHeight) y = e.clientY - 180;
+
+            tooltip.style.left = `${x}px`;
+            tooltip.style.top = `${y}px`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            tooltip.classList.remove('active');
+        });
+    });
+});
+
+// PHOTO ALBUM MODAL TOGGLE LOGIC
+document.addEventListener('DOMContentLoaded', () => {
+    const openAlbumBtn = document.getElementById('openAlbumBtn');
+    const albumModal = document.getElementById('albumModal');
+    const closeAlbumBtn = document.getElementById('closeAlbumBtn');
+
+    if (openAlbumBtn && albumModal && closeAlbumBtn) {
+        openAlbumBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            albumModal.style.display = 'flex';
+        });
+
+        closeAlbumBtn.addEventListener('click', () => {
+            albumModal.style.display = 'none';
+        });
+
+        albumModal.addEventListener('click', (e) => {
+            if (e.target === albumModal) {
+                albumModal.style.display = 'none';
+            }
+        });
+    }
+});
+
+// RETRO GAME INTRO SEQUENCE (RESTORED TEXT + SPOTLIGHT VIGNETTE)
+document.addEventListener('DOMContentLoaded', () => {
+    const introOverlay = document.getElementById('gameIntroOverlay');
+    const blackCover = document.getElementById('introBlackCover');
+    const titleScreen = document.getElementById('introTitleScreen');
+    const spotlightMask = document.getElementById('introSpotlightMask');
+    const spotlightSound = document.getElementById('spotlightSound');
+    
+    let introStarted = false;
+    document.body.classList.add('intro-active');
+
+    function startGallerySequence() {
+        if (introStarted) return;
+        introStarted = true;
+
+        // 1. Play spotlight click sound effect
+        if (spotlightSound) {
+            spotlightSound.volume = 0.7;
+            spotlightSound.play().catch(() => {});
+        }
+
+        // 2. Fade out title text & cover layer
+        if (titleScreen) titleScreen.style.opacity = '0';
+        blackCover.style.opacity = '0';
+        spotlightMask.classList.add('active');
+
+        setTimeout(() => {
+            blackCover.style.display = 'none';
+
+            // 3. Hold spotlight beam over character
+            setTimeout(() => {
+                // 4. Smoothly expand spotlight outward
+                spotlightMask.classList.add('expand');
+
+                // 5. Unmount overlay wrapper completely
+                setTimeout(() => {
+                    introOverlay.style.transition = 'opacity 0.6s ease';
+                    introOverlay.style.opacity = '0';
+                    setTimeout(() => {
+                        introOverlay.style.display = 'none';
+                        document.body.classList.remove('intro-active');
+                    }, 600);
+                }, 1600);
+            }, 1500);
+        }, 300);
+    }
+
+    // Trigger on click or keypress
+    introOverlay.addEventListener('click', startGallerySequence);
+    
+    window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space' || e.code === 'Enter' || e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            startGallerySequence();
+        }
+    });
+});
+
+
+// FORCE NAVIGATE TO #hero-section ON EVERY REFRESH
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    // Set URL hash to #hero-section
+    window.location.hash = '#hero-section';
+
+    // Scroll smoothly or instantly directly into the hero element
+    const hero = document.getElementById('hero-section');
+    if (hero) {
+        hero.scrollIntoView({ behavior: 'instant', block: 'start' });
+    }
+});
+
+// SOUND SYSTEM MANAGER
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Element References
+    const bgmAudio = document.getElementById('bgmAudio');
+    const stepSound = document.getElementById('stepSound');
+    const hoverSound = document.getElementById('hoverSound');
+    const clickSound = document.getElementById('clickSound');
+
+    // Set volumes
+    if (bgmAudio) bgmAudio.volume = 0.35;
+    if (stepSound) stepSound.volume = 0.4;
+    if (hoverSound) hoverSound.volume = 0.2;
+    if (clickSound) clickSound.volume = 0.5;
+
+    // 2. Start BGM after Intro / User Interaction (handles browser autoplay restrictions)
+    function playBGM() {
+        if (bgmAudio && bgmAudio.paused) {
+            bgmAudio.play().catch(() => {});
+        }
+    }
+
+    // Attach BGM trigger to space/enter key or overlay click
+    window.addEventListener('keydown', playBGM, { once: true });
+    window.addEventListener('click', playBGM, { once: true });
+
+    // 3. UI Hover & Click Sound Effects
+    const clickableElements = document.querySelectorAll('a, button, .pixel-card, .album-polaroid');
+
+    clickableElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            if (hoverSound) {
+                hoverSound.currentTime = 0;
+                hoverSound.play().catch(() => {});
+            }
+        });
+
+        el.addEventListener('click', () => {
+            if (clickSound) {
+                clickSound.currentTime = 0;
+                clickSound.play().catch(() => {});
+            }
+        });
+    });
 });
